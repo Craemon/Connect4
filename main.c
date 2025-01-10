@@ -14,8 +14,7 @@ void mainmenu() {
     switch (mainmenuoption) {
         //Enter gameloop
         case '1':
-            char board[row][col];
-            gameloop(board);
+            gamesetup();
         //Option to quit the game
         case 'q':
             printf("Thank you for playing Connect4!\n");
