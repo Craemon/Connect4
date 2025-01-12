@@ -2,7 +2,7 @@
 #define GAME_H
 
 #define row 6
-#define col 7
+#define col 7 //supports values up to 99
 
 void gamesetup();
 #endif //GAME_H
