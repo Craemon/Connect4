@@ -53,6 +53,14 @@ bool placetoken(char board[row][col], int chosencol, char token) {
 char windetection() {
     //add win detection
 }
+bool drawdetection(char board[row][col]) {
+    for (int i = 0; i < col; i++) {
+        if (board[0][i] == ' ') {
+            return false;
+        }
+    }
+    return true;
+}
 void gameloop(char board[row][col]) {
     int currentplayer = 1; //determines whose turn it is
     char token;
@@ -75,6 +83,11 @@ void gameloop(char board[row][col]) {
         if (!placetoken(board, chosencol-1, token)) {
             printf("Column full error\n");
             continue;
+        }
+        if (drawdetection(board)) {
+            printf("Board full.\n");
+            printboard(board);
+            gameWon = true;
         }
         if (currentplayer == 1) {
             currentplayer = 2;
