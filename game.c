@@ -25,7 +25,7 @@ void printboard(char board[row][col]) {
     }
     printf("\n");
     for(int j = 0; j < col; j++) {
-        printf("====", j + 1);
+        printf("====");
     }
     printf("=\n");
     for (int i = 0; i < row; i++) {
@@ -35,23 +35,104 @@ void printboard(char board[row][col]) {
         printf("|\n");
     }
     for(int j = 0; j < col; j++) {
-        printf("====", j + 1);
+        printf("====");
     }
     printf("=\n");
 }
 
-bool placetoken(char board[row][col], int chosencol, char token) {
+int placetoken(char board[row][col], int chosencol, char token) {
     //attempts to place token, returns if placement was successful
     for(int i = row-1; i >=0; i--) {
         if (board[i][chosencol] == ' ') {
             board[i][chosencol] = token;
+            return i;
+        }
+    }
+    return -1;
+}
+bool winhorizontal (char board[row][col], int tokenrow, int tokencol, char token) {
+    int consecutivetokens = 0;
+    int startpos = tokencol - (requiredtowin-1);
+    int endpos = tokencol + (requiredtowin-1);
+    if (startpos < 0) {
+        startpos =0;
+    }
+    if (endpos >= col) {
+        endpos = col-1;
+    }
+    for(int i = startpos; i <= endpos; i++) {
+        if(board[tokenrow][i] == token) {
+            consecutivetokens++;
+        } else {
+            consecutivetokens = 0;
+        }
+        if(consecutivetokens >= requiredtowin) {
             return true;
         }
     }
     return false;
 }
-char windetection() {
-    //add win detection
+bool winvertical(char board[row][col], int tokenrow, int tokencol, char token) {
+    int consecutivetokens = 0;
+    int startpos = tokenrow - (requiredtowin-1);
+    int endpos = tokenrow + (requiredtowin-1);
+    if (startpos < 0) {
+        startpos =0;
+    }
+    if (endpos >= row) {
+        endpos = row-1;
+    }
+    for(int i = startpos; i <= endpos; i++) {
+        if(board[i][tokencol] == token) {
+            consecutivetokens++;
+        } else {
+            consecutivetokens = 0;
+        }
+        if(consecutivetokens >= requiredtowin) {
+            return true;
+        }
+    }
+    return false;
+}
+bool windiagonal1(char board[row][col], int tokenrow, int tokencol, char token) {
+    int consecutivetokens = 0;
+    int startposrow = tokenrow - (requiredtowin-1);
+    int endposrow = tokenrow + (requiredtowin-1);
+    int startposcol = tokencol - (requiredtowin-1);
+    for(int i = startposrow, j=startposcol; i <= endposrow; i++,j++) {
+        if (i < 0 || i >= row || j < 0 || j >= col) {
+            continue;
+        }
+        if(board[i][j] == token) {
+            consecutivetokens++;
+        } else {
+            consecutivetokens = 0;
+        }
+        if(consecutivetokens >= requiredtowin) {
+            return true;
+        }
+    }
+    return false;
+}
+bool windiagonal2(char board[row][col], int tokenrow, int tokencol, char token) {
+    int consecutivetokens = 0;
+    int startposrow = tokenrow + (requiredtowin-1);
+    int endposrow = tokenrow - (requiredtowin-1);
+    int startposcol = tokencol - (requiredtowin-1);
+    for(int i = startposrow, j=startposcol; i >= endposrow; i--,j++) {
+        if (i < 0 || i >= row || j < 0 || j >= col) {
+            continue;
+        }
+        if(board[i][j] == token) {
+            consecutivetokens++;
+        } else {
+            consecutivetokens = 0;
+        }
+        if(consecutivetokens >= requiredtowin) {
+            return true;
+        }
+    }
+    return false;
 }
 bool drawdetection(char board[row][col]) {
     for (int i = 0; i < col; i++) {
@@ -80,9 +161,17 @@ void gameloop(char board[row][col]) {
             printf("This is not a valid input, please try again.\n");
             continue;
         }
-        if (!placetoken(board, chosencol-1, token)) {
+        int tokenrow = -1;
+        tokenrow = placetoken(board, chosencol-1, token);
+        if (tokenrow == -1) {
             printf("Column full error\n");
             continue;
+        }
+        int tokencol = chosencol-1;
+        if (winhorizontal(board,tokenrow,tokencol,token)||winvertical(board,tokenrow,tokencol,token)||windiagonal1(board,tokenrow,tokencol,token)||windiagonal2(board,tokenrow,tokencol,token)) {
+            printf("You win\n");
+            printboard(board);
+            gameWon = true;
         }
         if (drawdetection(board)) {
             printf("Board full.\n");
@@ -99,6 +188,5 @@ void gameloop(char board[row][col]) {
 void gamesetup() {
     char board[row][col];
     initboard(board);
-    printboard(board);
     gameloop(board);
 }
