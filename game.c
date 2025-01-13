@@ -142,10 +142,25 @@ bool drawdetection(char board[row][col]) {
     }
     return true;
 }
+int input_valid_int() {
+    int input;
+    while (true) {
+        printf("Please enter a number: ");
+        if (scanf("%d", &input) == 1) {
+            if (input < 1 || input > col) {
+                printf("This is not a valid input, please try again.\n");
+            } else {
+                return input;
+            }
+        } else {
+            printf("This is not a valid input, please try again.\n");
+            while (getchar() != '\n');
+        }
+    }
+}
 void gameloop(char board[row][col]) {
     int currentplayer = 1; //determines whose turn it is
     char token;
-    int chosencol;
     bool gameWon = false; //condition to break out of the game loop once game is over
     while(!gameWon) {
         if (currentplayer == 1) {
@@ -156,13 +171,8 @@ void gameloop(char board[row][col]) {
         printboard(board);
         printf("It's Player %d's turn:\n",currentplayer);
         printf("Please choose a column (1-%d) to place your token in:\n",col);
-        scanf("%d", &chosencol);
-        if (chosencol < 1 || chosencol > col) {
-            printf("This is not a valid input, please try again.\n");
-            continue;
-        }
-        int tokenrow = -1;
-        tokenrow = placetoken(board, chosencol-1, token);
+        int chosencol = input_valid_int();
+        int tokenrow = placetoken(board, chosencol - 1, token);
         if (tokenrow == -1) {
             printf("Column full error\n");
             continue;
