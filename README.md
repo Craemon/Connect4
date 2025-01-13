@@ -1,1 +1,1 @@
-Not even close to being finished:(
+Should have basic connect 4 functionality.
