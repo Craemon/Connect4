@@ -7,14 +7,18 @@ void printintro() {
 void mainmenu() {
     char mainmenuoption;
     printf("What do you want to do?\n");
-    printf("Type [1] to\n");
-    printf("Type [2] to\n");
+    printf("Type [1] to start a local game!\n");
+    printf("Type [2] to create a new online game!\n");
+    printf("Type [3] to continue an online game!\n");
     printf("Type [q] to quit the game :(\n");
     scanf(" %c", &mainmenuoption);
     switch (mainmenuoption) {
         //Enter gameloop
         case '1':
-            gamesetup();
+            gamesetuplocal();
+        //Enter gameloop
+        case '2':
+            gamesetuponline();
         //Option to quit the game
         case 'q':
             printf("Thank you for playing Connect4!\n");

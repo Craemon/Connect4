@@ -10,4 +10,6 @@ add_executable(connect4 main.c
         gamehelper.h
         windetection.h
         windetection.c
+        onlinegamehelper.h
+        onlinegamehelper.c
 )
