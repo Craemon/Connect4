@@ -117,3 +117,11 @@ void gamesetuponline() {
     initboard(row, col, board);
     gamerunonline(row, col, board, requiredtowin, currentplayer);
 }
+void gameimport() {
+    printf("You're continuing an online game via gamecode!\n");
+    printf("Please enter your gamecode:");
+    char gamecode[64];
+    scanf("%s", gamecode);
+    printf("Your gamecode is:\n");
+    printf("%s", gamecode);
+}

@@ -7,4 +7,5 @@
 */
 void gamesetuplocal();
 void gamesetuponline();
+void gameimport();
 #endif //GAME_H
