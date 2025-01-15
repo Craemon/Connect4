@@ -6,6 +6,8 @@
 #include "windetection.h"
 #include "onlinegamehelper.h"
 
+
+//the gameloop for the normal version of the game(executed until game is finished(determined by windetection))
 void gamelooplocal(int row, int col, char board[row][col], int requiredtowin) {
     int currentplayer = 1; //determines whose turn it is
     char token;
@@ -43,6 +45,8 @@ void gamelooplocal(int row, int col, char board[row][col], int requiredtowin) {
         }
     }
 }
+
+//game code for the online version(only runs for one turn and outputs the gamecode via "gengamecode")
 void gamerunonline(int row, int col, char board[row][col], int requiredtowin, int currentplayer) {
     char token;
     int chosencol;
@@ -79,6 +83,8 @@ void gamerunonline(int row, int col, char board[row][col], int requiredtowin, in
         gengamecode(row, col, board, currentplayer);
     }
 }
+
+//ensures correct input in game settings
 int input_valid_int() {
     int input;
     while (true) {
@@ -94,6 +100,8 @@ int input_valid_int() {
         }
     }
 }
+
+//inits the local game and prompts for game menu
 void gamesetuplocal() {
     printf("You've started a local game!\n");
     int row = 6; int col = 7; int requiredtowin = 4; char entergamesettings;
@@ -111,6 +119,8 @@ void gamesetuplocal() {
     initboard(row, col, board);
     gamelooplocal(row, col, board, requiredtowin);
 }
+
+//inits the online game(currently no settings supported but would be added here) only run when new game created
 void gamesetuponline() {
     printf("You've started a online game!\n");
     int row = 6; int col = 7; int requiredtowin = 4;
@@ -119,6 +129,8 @@ void gamesetuponline() {
     initboard(row, col, board);
     gamerunonline(row, col, board, requiredtowin, currentplayer);
 }
+
+//asks for gamecode of existing online game and populates the gameboard
 void gameimport() {
     printf("You're continuing an online game via gamecode!\n");
     printf("Please enter your gamecode:");
