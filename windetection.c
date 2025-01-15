@@ -1,5 +1,6 @@
 #include <stdbool.h>
 
+//checks for horizontal wins
 bool winhorizontal (int row, int col, char board[row][col], int requiredtowin, int tokenrow, int tokencol, char token) {
     int consecutivetokens = 0;
     int startpos = tokencol - (requiredtowin-1);
@@ -22,6 +23,8 @@ bool winhorizontal (int row, int col, char board[row][col], int requiredtowin, i
     }
     return false;
 }
+
+//checks for vertical wins
 bool winvertical(int row, int col, char board[row][col], int requiredtowin, int tokenrow, int tokencol, char token) {
     int consecutivetokens = 0;
     int startpos = tokenrow - (requiredtowin-1);
@@ -44,6 +47,8 @@ bool winvertical(int row, int col, char board[row][col], int requiredtowin, int 
     }
     return false;
 }
+
+//checks for diagonal wins
 bool windiagonal1(int row, int col, char board[row][col], int requiredtowin, int tokenrow, int tokencol, char token) {
     int consecutivetokens = 0;
     int startposrow = tokenrow - (requiredtowin-1);
@@ -64,6 +69,8 @@ bool windiagonal1(int row, int col, char board[row][col], int requiredtowin, int
     }
     return false;
 }
+
+//checks for diagonal wins(other diagonal)
 bool windiagonal2(int row, int col, char board[row][col], int requiredtowin, int tokenrow, int tokencol, char token) {
     int consecutivetokens = 0;
     int startposrow = tokenrow + (requiredtowin-1);
@@ -84,6 +91,8 @@ bool windiagonal2(int row, int col, char board[row][col], int requiredtowin, int
     }
     return false;
 }
+
+//checks if board completely full => draw
 bool drawdetection(int row, int col, char board[row][col]) {
     for (int i = 0; i < col; i++) {
         if (board[0][i] == ' ') {
