@@ -35,7 +35,7 @@ void printboard(int row, int col, char board[row][col]) {
     }
     printf("=\n");
 }
-//attempts to place token, returns if placement was successful
+// Function attempts to place token, returns if placement was successful
 int placetoken(int row, int col, char board[row][col], int chosencol, char token) {
     for(int i = row-1; i >=0; i--) {
         if (board[i][chosencol] == ' ') {
@@ -45,7 +45,7 @@ int placetoken(int row, int col, char board[row][col], int chosencol, char token
     }
     return -1;
 }
-//stops invalid inputs in column scan
+// Function stops invalid inputs in column scan
 int input_valid_game(int col) {
     int input;
     while (true) {

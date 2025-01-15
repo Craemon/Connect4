@@ -23,7 +23,7 @@ void gengamecode(int row, int col, char board[row][col], int currentplayer) {
     onedarray[onedarrayindex] = '\0';
 
     char currentchar='€'; int consecutivechars = 0; //initialize with impossible character "€"
-    char gamecode[43]; int gamecodeindex = 0;
+    char gamecode[86]; int gamecodeindex = 0;
     for(int i = 0; i < strlen(onedarray); i++) {
         gamecode[i] = ' ';
     }
@@ -52,7 +52,8 @@ void gengamecode(int row, int col, char board[row][col], int currentplayer) {
     }
     // adding last char to gamecode
     if (consecutivechars > 0) {
-        gamecode[gamecodeindex++] = currentchar;
+        gamecode[gamecodeindex] = currentchar;
+        gamecodeindex++;
         char tempchar[10];
         sprintf(tempchar, "%d", consecutivechars);
         int stoppoint = strlen(tempchar);
@@ -66,9 +67,6 @@ void gengamecode(int row, int col, char board[row][col], int currentplayer) {
     gamecode[gamecodeindex] = '\0';
     printf("Send this gamecode to another person!\n");
     printf("They can enter it by choosing option 3 in the main menu:\n");
-    printf("%s\n", gamecode);
-}
-
-void decodegamecode() {
-
+    printf("%s", gamecode);
+    printf("$\n"); //trailing character to signal end of code on import
 }

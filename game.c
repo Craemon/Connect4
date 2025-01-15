@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
+
 #include "gamehelper.h"
 #include "windetection.h"
 #include "onlinegamehelper.h"
@@ -120,8 +122,48 @@ void gamesetuponline() {
 void gameimport() {
     printf("You're continuing an online game via gamecode!\n");
     printf("Please enter your gamecode:");
-    char gamecode[64];
+    char gamecode[86];
     scanf("%s", gamecode);
-    printf("Your gamecode is:\n");
-    printf("%s", gamecode);
+    int currentplayer;
+    if (gamecode[0] == '1') {
+        currentplayer = 1;
+    } else if (gamecode[0] == '2') {
+        currentplayer = 2;
+    } else {
+        printf("You've entered a invalid game code!\n");
+    }
+    int stopper = strlen(gamecode);
+    char currentchar='€';
+    char onedarray[42]; int onedarrayindex=0;
+    for (int i = 1; i < stopper; i++) {
+        if (gamecode[i] == '#') {
+            currentchar = ' ';
+        } else if (gamecode[i] == 'X'|| gamecode[i] == 'O') {
+            currentchar = gamecode[i];
+        } else {
+            int consecutivechars = gamecode[i] - '0';
+            i++;
+            if (gamecode[i] == 'X' || gamecode[i] == 'O'|| gamecode[i] == '#') {
+                i--;
+            } else if (gamecode[i] == '$') {
+
+            } else {
+                consecutivechars = consecutivechars * 10 + gamecode[i] - '0';
+            }
+            for (int j = 0; j < consecutivechars; j++) {
+                onedarray[onedarrayindex] = currentchar;
+                onedarrayindex++;
+            }
+        }
+    }
+    int row = 6; int col = 7; int requiredtowin = 4;
+    char board[row][col];
+    int fillindex = 0;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            board[i][j] = onedarray[fillindex];
+            fillindex++;
+        }
+    }
+    gamerunonline(row, col, board, requiredtowin, currentplayer);
 }
