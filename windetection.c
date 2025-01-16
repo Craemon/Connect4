@@ -101,3 +101,16 @@ bool drawdetection(int row, int col, char board[row][col]) {
     }
     return true;
 }
+//check for a 2x2 cube as a win condition
+bool windet2x2a(int row, int col, char board[row][col], int requiredtowin, int tokenrow, int tokencol, char token)
+{
+    if (board[tokenrow-1][tokencol] == token)
+    {
+        if (board[tokenrow][tokencol-1] == token && board[tokenrow-1][tokencol-1] == token ||board[tokenrow][tokencol+1] == token && board[tokenrow-1][tokencol+1] == token)
+        {
+            return true;
+        }
+            return false;
+    }
+        return false;
+}
